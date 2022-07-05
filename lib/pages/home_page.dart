@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:ui' as ui;
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:mockup_my_screen/services/download.dart';
