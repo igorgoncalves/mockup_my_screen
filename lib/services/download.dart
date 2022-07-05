@@ -1,22 +1,19 @@
 import 'dart:convert';
+import 'dart:html';
 import 'dart:typed_data';
 
-import 'package:file_saver/file_saver.dart';
-import 'package:universal_html/html.dart' as html;
-
 class DownloadService {
-  void run(Uint8List bytes) async {
+  void run(Uint8List uilist) {
     // Encode our uilist in base64
+    final _base64 = base64Encode(uilist);
+    // Create the link with the file
+    final fileName = DateTime.now().microsecondsSinceEpoch.toString() + '.png';
 
-    // add the name
-    final name = DateTime.now().microsecondsSinceEpoch.toString();
-
-    await FileSaver.instance.saveFile(
-      name,
-      bytes,
-      'png',
-      mimeType: MimeType.PNG,
-    );
+    AnchorElement(
+        href: 'data:application/octet-stream;charset=utf-16le;base64,$_base64')
+      ..setAttribute("download", fileName)
+      ..target = 'blank'
+      ..click();
 
     return;
   }
