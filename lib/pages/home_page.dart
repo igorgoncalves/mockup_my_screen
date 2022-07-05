@@ -152,6 +152,7 @@ class ToolbarLayer extends StatelessWidget {
               child: DropdownButton(
                 isExpanded: true,
                 hint: const Text("Device"),
+                itemHeight: 50,
                 items: devicesMenuItens,
                 onChanged: (DeviceInfo? item) {
                   controller.changeDevice(item!);
