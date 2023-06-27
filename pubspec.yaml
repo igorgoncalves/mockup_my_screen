@@ -46,6 +46,7 @@ flutter:
     - assets/mockup-phone.svg
     - assets/screenshot.png
     - assets/screenshot2.png
+    - assets/logo.svg
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mockup_my_screen/services/download.dart';
 import 'package:mockup_my_screen/services/upload_file.dart';
 import 'package:mockup_my_screen/widgets/toolbar.dart';
@@ -44,16 +46,43 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.all(64.0),
                   child: Center(
-                    child: Screenshot(
-                      controller: screenshotController,
-                      child: MokupImage(
-                        asset: controller.image,
-                        device: controller.deviceInfo,
-                        orientation: controller.orientation,
-                        alignment: controller.alignment,
-                        fit: controller.fit,
-                        onUpload: onUpload,
-                      ),
+                    child: Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Screenshot(
+                            controller: screenshotController,
+                            child: MokupImage(
+                              asset: controller.image,
+                              device: controller.deviceInfo,
+                              orientation: controller.orientation,
+                              alignment: controller.alignment,
+                              fit: controller.fit,
+                              onUpload: onUpload,
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: controller.image != null,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(100)),
+                            child: IconButton(
+                              alignment: Alignment.topCenter,
+                              iconSize: 32,
+                              onPressed: () {
+                                controller.changeImage(null);
+                              },
+                              icon: const Icon(
+                                Icons.highlight_remove_rounded,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

@@ -1,7 +1,10 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mockup_my_screen/pages/options_controller.dart';
 import 'package:provider/provider.dart';
+
+import 'custom_dropdown.dart';
 
 class ToolbarWidget extends StatelessWidget {
   const ToolbarWidget({
@@ -21,91 +24,133 @@ class ToolbarWidget extends StatelessWidget {
       alignment: Alignment.bottomRight,
       child: Container(
         color: Colors.white10.withAlpha(230),
+        height: double.infinity,
         width: 400,
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: DropdownButton(
-                isExpanded: true,
-                hint: const Text("Device"),
-                itemHeight: 50,
-                items: controller.devicesMenuItens,
-                onChanged: (DeviceInfo? item) {
-                  controller.changeDevice(item!);
-                },
-                value: controller.deviceInfo,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: DropdownButton<BoxFit>(
-                isExpanded: true,
-                hint: const Text("Box Fit"),
-                items: controller.fitMenuItens,
-                onChanged: (BoxFit? item) {
-                  controller.changeFit(item!);
-                },
-                value: controller.fit,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: DropdownButton<Alignment>(
-                isExpanded: true,
-                hint: const Text("Box Fit"),
-                items: controller.alignMenuItens,
-                onChanged: (Alignment? item) {
-                  controller.changeAligment(item!);
-                },
-                value: controller.alignment,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: DropdownButton<Orientation>(
-                isExpanded: true,
-                hint: const Text("Orientation"),
-                items: controller.orientationsMenuItens,
-                onChanged: (Orientation? item) {
-                  controller.changeOrientation(item!);
-                },
-                value: controller.orientation,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Row(
-                children: [
-                  Checkbox(
-                    value: controller.safeArea,
-                    onChanged: (value) => controller.toogleSafeArea(value!),
-                  ),
-                  const Text("Safe Area")
-                ],
-              ),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: ElevatedButton(
-                    onPressed: onUpload,
-                    child: const Text("Upload Image"),
-                  ),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SvgPicture.asset("logo.svg"),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: controller.safeArea,
+                            onChanged: (value) =>
+                                controller.toogleSafeArea(value!),
+                          ),
+                          const Text("Safe Area"),
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: controller.scroll,
+                            onChanged: (value) =>
+                                controller.toogleScroll(value!),
+                          ),
+                          const Text("Scroll")
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 40),
-                Flexible(
-                  child: ElevatedButton(
-                    onPressed: onSave,
-                    child: const Text("Save"),
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: CustomDropdown<DeviceInfo>(
+                  labelText: "Device",
+                  items: controller.devicesMenuItens,
+                  onChanged: (DeviceInfo? item) {
+                    controller.changeDevice(item!);
+                  },
+                  value: controller.deviceInfo,
                 ),
-              ],
-            ),
-          ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: CustomDropdown<BoxFit>(
+                  labelText: "Box Fit",
+                  items: controller.fitMenuItens,
+                  onChanged: (BoxFit? item) {
+                    controller.changeFit(item!);
+                  },
+                  value: controller.fit,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: CustomDropdown<Alignment>(
+                  labelText: "Alignment",
+                  items: controller.alignMenuItens,
+                  onChanged: (Alignment? item) {
+                    controller.changeAligment(item!);
+                  },
+                  value: controller.alignment,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: CustomDropdown<Orientation>(
+                  labelText: "Orientation",
+                  items: controller.orientationsMenuItens,
+                  onChanged: (Orientation? item) {
+                    controller.changeOrientation(item!);
+                  },
+                  value: controller.orientation,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 32),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          textStyle: const TextStyle(color: Colors.black),
+                          side: const BorderSide(
+                            width: 3.0,
+                          ),
+                        ),
+                        onPressed: onUpload,
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Upload Image",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 40),
+                    Flexible(
+                      child: ElevatedButton(
+                        style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(
+                            Colors.black,
+                          ),
+                        ),
+                        onPressed: onSave,
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text("Mockup me!"),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

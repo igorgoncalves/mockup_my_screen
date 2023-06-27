@@ -16,6 +16,7 @@ const alignMap = <String, Alignment>{
 class OptionsController extends ChangeNotifier {
   DeviceInfo deviceInfo = Devices.ios.iPhone13;
   bool safeArea = false;
+  bool scroll = false;
   ImageProvider? image;
   Orientation orientation = Orientation.portrait;
   BoxFit fit = BoxFit.contain;
@@ -24,7 +25,16 @@ class OptionsController extends ChangeNotifier {
   final devicesMenuItens = [
     for (var item in Devices.all)
       DropdownMenuItem(
-        child: Text(item.name),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(item.name),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: DeviceFrame(device: item, screen: Container()),
+            ),
+          ],
+        ),
         value: item,
       )
   ];
@@ -73,13 +83,18 @@ class OptionsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  changeImage(ImageProvider value) {
+  changeImage(ImageProvider? value) {
     image = value;
     notifyListeners();
   }
 
   toogleSafeArea(bool value) {
     safeArea = value;
+    notifyListeners();
+  }
+
+  toogleScroll(bool value) {
+    scroll = value;
     notifyListeners();
   }
 

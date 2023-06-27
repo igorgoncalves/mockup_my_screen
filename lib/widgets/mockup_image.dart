@@ -25,8 +25,14 @@ class MokupImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<OptionsController>(context);
+
     Widget element = asset == null
         ? ElevatedButton.icon(
+            style: const ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(
+                Colors.black12,
+              ),
+            ),
             icon: const Icon(
               Icons.add_a_photo_outlined,
               size: 64,
@@ -34,14 +40,21 @@ class MokupImage extends StatelessWidget {
             label: const Text("Add Image", textScaleFactor: 3.5),
             onPressed: onUpload,
           )
-        : Image(
-            image: asset!,
-            fit: fit,
-            alignment: alignment,
+        : GestureDetector(
+            child: Image(
+              image: asset!,
+              fit: fit,
+              alignment: alignment,
+            ),
+            onTap: onUpload,
           );
 
     if (controller.safeArea) {
       element = SafeArea(child: element);
+    }
+
+    if (controller.scroll) {
+      element = SingleChildScrollView(child: element);
     }
 
     return DeviceFrame(
