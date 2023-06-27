@@ -23,11 +23,11 @@ class AppWidget extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Mockup My Screen',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomePage(title: 'Flutter Demo Home Page'),
+        home: const HomePage(title: '- My Mockup'),
       ),
     );
   }
