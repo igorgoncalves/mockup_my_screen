@@ -28,10 +28,8 @@ class MokupImage extends StatelessWidget {
 
     Widget element = asset == null
         ? ElevatedButton.icon(
-            style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(
-                Colors.black12,
-              ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black12,
             ),
             icon: const Icon(
               Icons.add_a_photo_outlined,

@@ -134,10 +134,8 @@ class ToolbarWidget extends StatelessWidget {
                     const SizedBox(width: 40),
                     Flexible(
                       child: ElevatedButton(
-                        style: const ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(
-                            Colors.black,
-                          ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
                         ),
                         onPressed: onSave,
                         child: const Padding(
